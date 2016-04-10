@@ -6,18 +6,21 @@ void func();
 void keep_vars(int i, ...) {
 }
 
-void func() {
+void func()
+ {
 	int _i;
 	char _str[10];
 	keep_vars(0, _i, _str);
 	puts("Please enter 0 or 1:");
 	scanf("%d", &_i);
-	if (_i == 0) {
+	if (_i == 0) 
+	{
 		puts("Please enter a string:");
 		scanf("%s", _str);
 		puts(_str);
 	}
-	else {
+	else 
+	{
 		return;
 	}
 }

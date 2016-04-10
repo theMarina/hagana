@@ -12,42 +12,64 @@ int urandom() {
 	return 4;
 #endif
 }
-int canary_val = 0;
+int canary_val = 0
 int get_canary_val() {
 	if (!canary_val)
 		canary_val = urandom();
 	return canary_val;
 }
 #include <stdio.h>
-void main ()
-{
+#include <stdlib.h>
+
+void keep_vars(int i, ...);
+void func();
+void keep_vars(int i, ...) {
+}
+
+void func()
+ {
 int canary0 = get_canary_val();
-	int k = 0;
+	int _i;
 int canary1 = get_canary_val();
 int canary2 = get_canary_val();
-	double aa;
+	char _str[10];
 int canary3 = get_canary_val();
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-
+	keep_vars(0, _i, _str);
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-	while(2 != 3)
+	puts("Please enter 0 or 1:");
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+	scanf("%d", &_i);
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+	if (_i == 0) 
 	{
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-		x = 5;
+		puts("Please enter a string:");
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-		y = 8;
+		scanf("%s", _str);
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+		puts(_str);
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
@@ -57,14 +79,24 @@ if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); ex
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+	else 
+	{
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+		return;
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+	}
+if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+}
 
-if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-	printf("cool");
-if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary2 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
-if (canary3 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
+void main(){
+	func();
 }

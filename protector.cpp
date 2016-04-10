@@ -21,7 +21,7 @@ vector<string> prologue = {
 	"\treturn 4;",
 	"#endif",
 	"}",
-	"int canary_val = 0",
+	"int canary_val = 0;",
 	"int get_canary_val() {",
 	"\tif (!canary_val)",
 	"\t\tcanary_val = urandom();",
@@ -48,6 +48,13 @@ bool is_declaration(string line) {
 			return true;
 	}
 	return false;
+}
+
+void print_sainity_check(ofstream& out_file, int nr_canaries) {
+	for (int i = 0 ; i < nr_canaries ; i++) {
+			out_file << "if (canary" + to_string(i) + " != get_canary_val()) {";
+			out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1); }" << endl;
+	}
 }
 
 int main(int argc, char *argv[]) {
@@ -82,6 +89,7 @@ int main(int argc, char *argv[]) {
 		if(line.find("}") != string::npos) {
 			nesting_level --;
 			in_declarations = false;
+			print_sainity_check(out_file, nr_canaries);
 			out_file << line << endl;
 			continue;
 		}
@@ -89,8 +97,8 @@ int main(int argc, char *argv[]) {
 		if(in_declarations) {
 			if(!is_declaration(line)) {
 				in_declarations = false;
-				//out_file << line << endl;
-				goto sainity_check;
+				print_sainity_check(out_file, nr_canaries);
+				out_file << line << endl;
 				continue;
 			}
 			
@@ -100,14 +108,10 @@ int main(int argc, char *argv[]) {
 			out_file << "int canary" + to_string(nr_canaries) + " = get_canary_val();" << endl;
 			nr_canaries++;
 		} else {
-sainity_check:
-			out_file << line << endl;
 			if(nesting_level) {
-				for (int i = 0 ; i < nr_canaries ; i++) {
-					out_file << "if (canary" + to_string(i) + " != get_canary_val()) {";
-					out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1); }" << endl;
-				}
+				print_sainity_check(out_file, nr_canaries);
 			}
+			out_file << line << endl;
 		}
     }
 }
