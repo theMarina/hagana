@@ -1,0 +1,40 @@
+#include <stdio.h>
+void main (){
+	int k = 0;
+	
+	{
+		int moshe = 2;
+		
+		{
+			int bob = 3;
+			int buf[3];
+			
+			printf("X");
+		}
+	}
+	
+	printf("cool");
+	
+	
+	
+}
+
+
+
+int bob(){
+	int shlong = 2;
+	int bob = 3;
+	if (shlong == 3){
+		return 5;
+	}
+	
+	bob = 2;
+	shlong = shlong + 2;
+	
+	for (shlong = 3; shlong < 5; shlong++){
+		shlong++;
+	}
+	
+	bob = 3;
+	shlong++;
+}

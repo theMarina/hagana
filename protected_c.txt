@@ -1,0 +1,113 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+int urandom() {
+#ifdef __unix__
+ int var;
+ FILE *fd = fopen("/dev/urandom", "r");
+ fread(&var, sizeof(int), 1, fd);
+ fclose(fd);
+ return var;
+#else
+ return 4;
+#endif
+}
+
+
+int canary = 777;
+int canaryProlog = 777;
+int canaryEnd = 777;
+
+int getNum(){int i = canary; canaryEnd = canary; canaryProlog = canary; return i;}
+
+
+
+
+
+
+
+
+#include <stdio.h>
+void main (){
+canary = urandom();
+
+int canaryProlog = getNum();
+	int k = 0;
+int canaryEnd = getNum();
+
+	
+	{
+int canaryProlog = getNum();
+		int moshe = 2;
+int canaryEnd = getNum();
+
+		
+		{
+int canaryProlog = getNum();
+			int bob = 3;
+			int buf[3];
+int canaryEnd = getNum();
+
+			
+			printf("X");
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+		}
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+	}
+	
+	printf("cool");
+	
+	
+	
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+}
+
+
+
+int bob(){
+int canaryProlog = getNum();
+	int shlong = 2;
+	int bob = 3;
+	if (shlong == 3){
+int canaryEnd = getNum();
+
+int canaryProlog = getNum();
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+		return 5;
+	}
+	
+	bob = 2;
+	shlong = shlong + 2;
+int canaryEnd = getNum();
+
+	
+	for (shlong = 3; shlong < 5; shlong++){
+int canaryEnd = getNum();
+
+int canaryProlog = getNum();
+		shlong++;
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+	}
+	
+	bob = 3;
+	shlong++;
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+}

@@ -1,0 +1,87 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+int urandom() {
+#ifdef __unix__
+ int var;
+ FILE *fd = fopen("/dev/urandom", "r");
+ fread(&var, sizeof(int), 1, fd);
+ fclose(fd);
+ return var;
+#else
+ return 4;
+#endif
+}
+
+
+int canary = 777;
+int canaryProlog = 777;
+int canaryEnd = 777;
+
+int getNum(){int i = canary; canaryEnd = canary; canaryProlog = canary; return i;}
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void keep_vars(int i, ...);
+void func();
+void keep_vars(int i, ...) {
+int canaryProlog = getNum();
+
+int canaryEnd = getNum();
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+}
+
+void func() {
+int canaryProlog = getNum();
+	int _i;
+	char _str[10];
+int canaryEnd = getNum();
+
+	keep_vars(0, _i, _str);
+	puts("Please enter 0 or 1:");
+	scanf("%d", &_i);
+	if (_i == 0) {
+int canaryProlog = getNum();
+		puts("Please enter a string:");
+		scanf("%s", _str);
+		puts(_str);
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+	}
+	else {
+int canaryProlog = getNum();
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+		return;
+	}
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+}
+
+void main(){
+canary = urandom();
+
+int canaryProlog = getNum();
+	func();
+
+if (canaryProlog != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+
+if (canaryEnd != getNum()) {printf("Alert! Buffer Overflow detected.");exit(1);} 
+}
