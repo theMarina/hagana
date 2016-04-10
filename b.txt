@@ -1,6 +1,14 @@
 #include <stdio.h>
-void main (){
+void main ()
+{
 	int k = 0;
+	double aa;
+
+	while(2 != 3)
+	{
+		x = 5;
+		y = 8;
+	}
 
 	printf("cool");
 }

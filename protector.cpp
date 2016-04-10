@@ -21,16 +21,32 @@ vector<string> prologue = {
 	"\treturn 4;",
 	"#endif",
 	"}",
-	"int canary_val = urandom();",
+	"int canary_val = 0",
+	"int get_canary_val() {",
+	"\tif (!canary_val)",
+	"\t\tcanary_val = urandom();",
+	"\treturn canary_val;",
+	"}",
 };
 
-bool is_declaration(string str) {
-	if(regex_match ("str", std::regex("(( |\t)*)(short) (.*)"))) return true;
-	if(regex_match ("str", std::regex("(( |\t)*)(long) (.*)"))) return true;
-	if(regex_match ("str", std::regex("(( |\t)*)(char) (.*)"))) return true;
-	if(regex_match ("str", std::regex("(( |\t)*)(int) (.*)"))) return true;
-	if(regex_match ("str", std::regex("(( |\t)*)(float) (.*)"))) return true;
-	if(regex_match ("str", std::regex("(( |\t)*)(double) (.*)"))) return true;
+bool is_declaration(string line) {
+	const static vector<string> types = { "short",
+		"long",
+		"char",
+		"int",
+		"float",
+		"double",
+	};
+	
+	string word;
+	std::istringstream is;
+	is.str(line);
+	is >> word;
+
+	for(auto it = types.begin() ; it != types.end() ; ++it) {
+		if(word == *it)
+			return true;
+	}
 	return false;
 }
 
@@ -58,31 +74,39 @@ int main(int argc, char *argv[]) {
 		if(line.find("{") != string::npos) {
 			nesting_level ++;
 			in_declarations = true;
-			nr_canaries = 0;
+			if(nesting_level == 1)
+				nr_canaries = 0;
+			out_file << line << endl;
 			continue;
 		}
 		if(line.find("}") != string::npos) {
 			nesting_level --;
 			in_declarations = false;
+			out_file << line << endl;
 			continue;
 		}
 		
 		if(in_declarations) {
 			if(!is_declaration(line)) {
 				in_declarations = false;
+				//out_file << line << endl;
+				goto sainity_check;
 				continue;
 			}
 			
-			out_file << "int canary" + to_string(nr_canaries) + " = canary_val;" << endl;
+			out_file << "int canary" + to_string(nr_canaries) + " = get_canary_val();" << endl;
 			nr_canaries++;
 			out_file << line << endl;
-			out_file << "int canary" + to_string(nr_canaries) + " = canary_val;" << endl;
+			out_file << "int canary" + to_string(nr_canaries) + " = get_canary_val();" << endl;
 			nr_canaries++;
 		} else {
+sainity_check:
 			out_file << line << endl;
-			for (int i = 0 ; i < nr_canaries ; i++) {
-				out_file << "if (canary" + to_string(i) + " != canary_val";
-				out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1);" << endl;
+			if(nesting_level) {
+				for (int i = 0 ; i < nr_canaries ; i++) {
+					out_file << "if (canary" + to_string(i) + " != get_canary_val()) {";
+					out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1); }" << endl;
+				}
 			}
 		}
     }
