@@ -19,7 +19,6 @@ int get_canary_val() {
 	return canary_val;
 }
 #include <stdio.h>
-
 int main()
 {
 int canary0 = get_canary_val();
@@ -44,4 +43,3 @@ if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); ex
 if (canary0 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 if (canary1 != get_canary_val()) {printf("Alert! Buffer Overflow detected."); exit(1); }
 }
-

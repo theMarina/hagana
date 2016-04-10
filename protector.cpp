@@ -29,6 +29,18 @@ vector<string> prologue = {
 	"}",
 };
 
+string line_first_word(string line) {
+	string word;
+	std::istringstream is;
+	is.str(line);
+	is >> word;
+	return word;
+}
+
+bool is_else(string line) {
+	return line_first_word(line) == "else";
+}
+
 bool is_declaration(string line) {
 	const static vector<string> types = { "short",
 		"long",
@@ -38,10 +50,7 @@ bool is_declaration(string line) {
 		"double",
 	};
 	
-	string word;
-	std::istringstream is;
-	is.str(line);
-	is >> word;
+	string word = line_first_word(line);
 
 	for(auto it = types.begin() ; it != types.end() ; ++it) {
 		if(word == *it)
@@ -78,6 +87,10 @@ int main(int argc, char *argv[]) {
     bool in_declarations = false;
     while (std::getline(in_file, line))
     {
+		string word = line_first_word(line);
+		if(word.size() == 0)
+			continue;
+		
 		if(line.find("{") != string::npos) {
 			nesting_level ++;
 			in_declarations = true;
@@ -97,7 +110,8 @@ int main(int argc, char *argv[]) {
 		if(in_declarations) {
 			if(!is_declaration(line)) {
 				in_declarations = false;
-				print_sainity_check(out_file, nr_canaries);
+				if(!is_else(line))
+					print_sainity_check(out_file, nr_canaries);
 				out_file << line << endl;
 				continue;
 			}
@@ -108,7 +122,7 @@ int main(int argc, char *argv[]) {
 			out_file << "int canary" + to_string(nr_canaries) + " = get_canary_val();" << endl;
 			nr_canaries++;
 		} else {
-			if(nesting_level) {
+			if(nesting_level && !is_else(line)) {
 				print_sainity_check(out_file, nr_canaries);
 			}
 			out_file << line << endl;

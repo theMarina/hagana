@@ -9,6 +9,8 @@ void keep_vars(int i, ...) {
 void func()
  {
 	int _i;
+
+	int j;
 	char _str[10];
 	keep_vars(0, _i, _str);
 	puts("Please enter 0 or 1:");
