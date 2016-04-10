@@ -23,7 +23,7 @@ vector<string> prologue = {
 	"}",
 	"int canary_val = 0;",
 	"int get_canary_val() {",
-	"\tif (!canary_val)",
+	"\twhile (!canary_val)",
 	"\t\tcanary_val = urandom();",
 	"\treturn canary_val;",
 	"}",
