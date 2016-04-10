@@ -21,6 +21,7 @@ vector<string> prologue = {
 	"\treturn 4;",
 	"#endif",
 	"}",
+	"int canary_val = urandom();",
 };
 
 bool is_declaration(string str) {
@@ -72,14 +73,17 @@ int main(int argc, char *argv[]) {
 				continue;
 			}
 			
-			out_file << "int canary" + string(canaries) + " = urandom();" << endl;
-			canasries++;
+			out_file << "int canary" + to_string(nr_canaries) + " = canary_val;" << endl;
+			nr_canaries++;
 			out_file << line << endl;
-			out_file << "int canary" + string(canaries) + " = urandom();" << endl;
-			canasries++;
+			out_file << "int canary" + to_string(nr_canaries) + " = canary_val;" << endl;
+			nr_canaries++;
 		} else {
 			out_file << line << endl;
-			out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1);" << endl;
+			for (int i = 0 ; i < nr_canaries ; i++) {
+				out_file << "if (canary" + to_string(i) + " != canary_val";
+				out_file << "printf(\"Alert! Buffer Overflow detected.\");" << " exit(1);" << endl;
+			}
 		}
     }
 }
